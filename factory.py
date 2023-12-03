@@ -58,4 +58,3 @@ class UIFactory:
         except KeyError as exc:
             print(exc)
             raise NonExistentUIError(f'There is no user interface with {language} language')
-
