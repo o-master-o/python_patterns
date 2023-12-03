@@ -20,5 +20,5 @@ def test_ui_factory_should_use_proper_language_interface(user_interface, languag
 
 def test_providing_non_existent_language_should_rise_non_existent_ui_error(user_interface):
     with pytest.raises(NonExistentUIError) as exc:
-        user_interface('nonexistent_language')
-    assert 'There is no user interface with nonexistent_language language' == str(exc.value)
+        user_interface('nonexistent')
+    assert 'There is no user interface with nonexistent language' == str(exc.value)
