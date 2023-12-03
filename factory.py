@@ -1,14 +1,11 @@
 from typing import Protocol
 
-import pydantic
-from pydantic import StrictStr, BaseModel
-
 
 class UI(Protocol):
-    name: StrictStr
-    native_name: StrictStr
+    name: str
+    native_name: str
 
-    def greeting(self, user: StrictStr):
+    def greeting(self, user: str) -> str:
         pass
 
 
@@ -51,7 +48,7 @@ class UIFactory:
         self._user_interfaces[ui.name] = ui
         return self
 
-    def __call__(self, language: StrictStr):
+    def __call__(self, language: str):
         try:
             return self._user_interfaces[language]
         except KeyError as exc:
