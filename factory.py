@@ -41,12 +41,16 @@ class NonExistentUIError(Exception):
 
 
 class UIFactory:
-    def __init__(self):
+    def __init__(self, *uis: UI):
         self._user_interfaces = {}
-        
-    def add_ui(self, ui: UI):
+        self._register_ues(uis)
+
+    def _register_ues(self, uis):
+        for ui in uis:
+            self._add_ui(ui)
+
+    def _add_ui(self, ui: UI):
         self._user_interfaces[ui.name] = ui
-        return self
 
     def __call__(self, language: str):
         try:

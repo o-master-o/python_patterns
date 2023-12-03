@@ -5,8 +5,7 @@ from factory import UIFactory, SpanishUI, EnglishUI, GermanUI, NonExistentUIErro
 
 @pytest.fixture
 def user_interface():
-    ui_engine = UIFactory()
-    ui_engine.add_ui(SpanishUI()).add_ui(EnglishUI()).add_ui(GermanUI())
+    ui_engine = UIFactory(SpanishUI(), EnglishUI(), GermanUI())
     return ui_engine
 
 
