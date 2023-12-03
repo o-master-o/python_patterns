@@ -1,12 +1,11 @@
-from typing import Type, Protocol
-from pydantic import StrictStr
+from typing import Protocol
 
 
 class UI(Protocol):
-    name: StrictStr
-    native_name: StrictStr
+    name: str
+    native_name: str
 
-    def greeting(self, user: StrictStr):
+    def greeting(self, user: str) -> str:
         pass
 
 
@@ -37,6 +36,10 @@ class GermanUI:
                 f'Sie verwenden eine {self.native_name} Benutzeroberfläche')
 
 
+class NonExistentUIError(Exception):
+    pass
+
+
 class UIFactory:
     def __init__(self):
         self._user_interfaces = {}
@@ -45,5 +48,10 @@ class UIFactory:
         self._user_interfaces[ui.name] = ui
         return self
 
-    def greeting(self, language, user):
-        return self._user_interfaces[language].greeting(user)
+    def __call__(self, language: str):
+        try:
+            return self._user_interfaces[language]
+        except KeyError as exc:
+            print(exc)
+            raise NonExistentUIError(f'There is no user interface with {language} language')
+

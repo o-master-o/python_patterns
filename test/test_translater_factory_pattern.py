@@ -1,13 +1,13 @@
 import pytest
 
-from factory import UIFactory, SpanishUI, EnglishUI, GermanUI
+from factory import UIFactory, SpanishUI, EnglishUI, GermanUI, NonExistentUIError
 
 
 @pytest.fixture
 def user_interface():
-    translator_engine = UIFactory()
-    translator_engine.add_ui(SpanishUI()).add_ui(EnglishUI()).add_ui(GermanUI())
-    return translator_engine
+    ui_engine = UIFactory()
+    ui_engine.add_ui(SpanishUI()).add_ui(EnglishUI()).add_ui(GermanUI())
+    return ui_engine
 
 
 @pytest.mark.parametrize('language, user, expected_greeting', [
@@ -15,5 +15,11 @@ def user_interface():
     ('German', 'Adele', 'Guten Morgen Adele\nSie verwenden eine Deutsche Benutzeroberfläche'),
     ('Spanish', 'Antonio', 'Buenos días Antonio\nEstás usando una interfaz en Español'),
 ])
-def test_translate_to_languages(user_interface, language, user, expected_greeting):
-    assert expected_greeting == user_interface.greeting(language, user)
+def test_ui_factory_should_use_proper_language_interface(user_interface, language, user, expected_greeting):
+    assert expected_greeting == user_interface(language).greeting(user)
+
+
+def test_providing_non_existent_language_should_rise_non_existent_ui_error(user_interface):
+    with pytest.raises(NonExistentUIError) as exc:
+        user_interface('nonexistent_language')
+    assert 'There is no user interface with nonexistent_language language' == str(exc.value)
