@@ -1,6 +1,6 @@
 import pytest
 
-from factory import UIFactory, SpanishUI, EnglishUI, GermanUI, NonExistentUIError
+from creational_patterns.factory import UIFactory, SpanishUI, EnglishUI, GermanUI, NonExistentUIError
 
 
 @pytest.fixture

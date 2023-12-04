@@ -12,7 +12,7 @@ class SingletonB(SimpleSingleton):
 
 
 def get_singleton_obj(id_storage):
-    _id = id(SingletonA())
+    _id = id(ThreadSingleton())
     id_storage.append(_id)
 
 
@@ -27,7 +27,7 @@ def test_for_simple_singleton_same_sub_classes_instances_should_be_the_same_inst
     assert singleton_a1 is not singleton_b1
 
 
-def test_for_thread_singleton_same_sub_classes_instances_should_be_the_same_instances_and_different_sub_classes_instances_should_be_the_different():
+def test_for_thread_singleton_instances_should_be_the_same_instances():
     id_storage = []
     thread1 = Thread(target=get_singleton_obj, args=(id_storage, ))
     thread2 = Thread(target=get_singleton_obj, args=(id_storage, ))

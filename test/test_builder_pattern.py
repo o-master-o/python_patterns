@@ -1,6 +1,4 @@
-import pytest
-
-from builder import ComputerBuilder
+from creational_patterns.builder import ComputerBuilder
 
 
 def test_builder_built_computer_with_all_provided_parts():
